@@ -82,4 +82,5 @@ yarn test:watch
 ```
 
 **Nota 1** Si requieres otro tipo de proveedor de ejecución de pruebas unitarias, siéntete libre de configurarlo.
+
 **Nota 2** No hace falta un alto coverage, solo demostrar que se sabe manejar TDD si este fuese el caso
