@@ -28,3 +28,18 @@ npm run test
 ```
 
 Se utilizo la libreria puppeteer para extraer la información de la página web con la cual sacará una fotografía de la página en el momento de extraer la información.
+
+
+## Rutas:
+
+Ruta para extraer la información del sistio web y guardarlo en la base de datos.
+
+```bash
+http://localhost:3000/api/init
+```
+
+Ruta para obtener la información guardada.
+
+```bash
+http://localhost:3000/api/products
+```
