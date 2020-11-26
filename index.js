@@ -18,7 +18,7 @@ const {
 const isRequestAjaxOrApi = require("./utils/isRequestAjaxOrApi");
 // app
 const app = express();
-
+//app.use('*', DataBaseConnect);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,7 +27,7 @@ app.use(cookieParser());
 // middlewares
 app.use(bodyParser.json());
 // routes
-app.use('*', DataBaseConnect);
+
 Api(app);
 
 app.use(function(req, res, next) {

@@ -21,28 +21,29 @@ async function scraper(url) {
                         category: $review.querySelector("h3") ? $review.querySelector("h3").textContent : "",
                         position: $item.querySelector('.zg_rank') ? $item.querySelector('.zg_rank').textContent.trim() : "",
                         title: $item.querySelector('.p13n-sc-truncate-desktop-type2') ? $item.querySelector('.p13n-sc-truncate-desktop-type2').textContent.trim() : "",
-                        ranking: $item.querySelector('div.a-icon-row.a-spacing-none > .a-size-small') ? $item.querySelector('div.a-icon-row.a-spacing-none > .a-size-small').textContent.trim() : "",
+                        NumberOfReviews: $item.querySelector('div.a-icon-row.a-spacing-none > .a-size-small') ? $item.querySelector('div.a-icon-row.a-spacing-none > .a-size-small').textContent.trim() : "",
                         textRanking: $item.querySelector('div.a-icon-row.a-spacing-none > .a-link-normal') ? $item.querySelector('div.a-icon-row.a-spacing-none > .a-link-normal').getAttribute('title') : "",
                         img: $item.querySelector('img').getAttribute('src')?  decodeURIComponent($item.querySelector('img').getAttribute('src')) : "",
+                        id: $item.querySelector('.a-section.a-spacing-none.p13n-asin') ? $item.querySelector('.a-section.a-spacing-none.p13n-asin').getAttribute('data-p13n-asin-metadata') : null
                     })
                 })
 
             })
-            return {
-                data: data
-            }
+            return data;
         })
-
-        console.log("data -- ", JSON.stringify(data))
-        console.log("data -- ", data)
         await browser.close();
+         //console.log("data -- ", JSON.stringify(data))
+        //console.log("data -- ", data)
+        return data;
+
+        
     } catch (error) {
         console.error("[error] - ", error);
     }
 
 }
 
-//scraper("http://www.amazon.com.mx/gp/bestsellers/?ref_=nav_cs_bestsellers")
+// scraper("http://www.amazon.com.mx/gp/bestsellers/?ref_=nav_cs_bestsellers")
 
 module.exports = {
     scraper

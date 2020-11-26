@@ -4,7 +4,7 @@ let services;
 module.exports = async function DataBaseConnect(req, res, next) {
     if (!services) {        
         try {
-            services = await createDb();
+            services = await new createDb();
         } catch (e) {
             return next(e);
         }

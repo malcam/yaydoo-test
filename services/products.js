@@ -1,48 +1,31 @@
 const productsMocks = require("../utils/mocks/products");
-const MongoLib = require("../lib/mongo");
+const { createDb } = require("../lib/db");
 
-class ProductsService {
-  constructor() {
-    this.collection = "products";
-    this.mongoDB = new MongoLib();
-  }
-
-  async getProducts({ tags }) {
-    const query = tags && { tags: { $in: tags } };
-    const products = await this.mongoDB.getAll(this.collection, query);
-
-    return products || [];
-  }
-
-  async getProduct({ productId }) {
-    const product = await this.mongoDB.get(this.collection, productId);
-    return product || {};
-  }
-
-  async createProduct({ product }) {
-    const createProductId = await this.mongoDB.create(this.collection, product);
-
-    return createProductId;
-  }
-
-  async updateProduct({ productId, product }) {
-    const updateProductId = await this.mongoDB.update(
-      this.collection,
-      productId,
-      product
-    );
-
-    return updateProductId;
-  }
-
-  async deleteProduct({ productId }) {
-    const deletedProductId = await this.mongoDB.delete(
-      this.collection,
-      productId
-    );
-
-    return deletedProductId;
+async function createProduct(product) {
+  try {
+    const services = await createDb();    
+    product.map( async item => {
+      const id = JSON.parse(item.id) ? JSON.parse(item.id).asin : Math.random();
+      await services.setProducts(id, item.category, item.title, item.textRanking, item.NumberOfReviews, item.img);
+    })
+  } catch (error) {
+    console.error("error createProduct ", error);
+    return error
   }
 }
 
-module.exports = ProductsService;
+async function getProducts() {
+  try {
+    const services = await createDb();
+    const products = await services.getProducts();
+    return products;
+  } catch (error) {
+    console.error("error getProducts ", error);
+    return error
+  }
+}
+
+module.exports = {
+  createProduct,
+  getProducts
+};
