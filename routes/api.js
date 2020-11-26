@@ -5,6 +5,7 @@ const {
     createProduct,
     getProducts
 } = require("../services/products");
+
 function Api(app) {
     const router = express.Router();
     app.use('/api', router);
