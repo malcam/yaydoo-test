@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const productIdSchema = Joi.string().regex(/^[0-9a-fA-F]{24}$/);
 const productTagSchema = Joi.array().items(Joi.string().max(10));
@@ -11,7 +11,7 @@ const createProductSchema = {
     .min(1)
     .max(1000000),
   image: Joi.string().required(),
-  tags: productTagSchema
+  tags: productTagSchema,
 };
 
 const updateProductSchema = {
@@ -20,12 +20,12 @@ const updateProductSchema = {
     .min(1)
     .max(1000000),
   image: Joi.string(),
-  tags: productTagSchema
+  tags: productTagSchema,
 };
 
 module.exports = {
   productIdSchema,
   productTagSchema,
   createProductSchema,
-  updateProductSchema
+  updateProductSchema,
 };
