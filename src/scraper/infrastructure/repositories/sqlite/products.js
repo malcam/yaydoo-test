@@ -1,5 +1,5 @@
-const productsMocks = require('../utils/mocks/products');
-const { createDb } = require('../lib/db');
+const productsMocks = require('../mocks/products');
+const { createDb } = require('../../lib/db');
 
 async function createProduct(product) {
   try {

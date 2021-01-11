@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const boom = require('boom');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const DataBaseConnect = require('./routes/dataBaseConnect');
-const Api = require('./routes/api');
+const DataBaseConnect = require('./utils/middlewares/dataBaseConnect');
+const Api = require('./services/scraper/routes/api');
 const { config } = require('./config/index');
 
 const {

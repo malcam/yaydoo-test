@@ -1,9 +1,9 @@
 const express = require('express');
-const { scraper } = require('../utils/scraping/index');
+const { scraper } = require('../../../src/scraper/infrastructure/service/AmazonBestsellersScraper');
 const {
   createProduct,
   getProducts,
-} = require('../services/products');
+} = require('../../../src/scraper/infrastructure/repositories/sqlite/products');
 
 function Api(app) {
   const router = express.Router();

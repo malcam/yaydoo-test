@@ -1,4 +1,4 @@
-const { createDb } = require('../lib/db');
+const { createDb } = require('../../src/scraper/infrastructure/lib/db');
 
 let services;
 module.exports = async function DataBaseConnect(req, res, next) {

@@ -5,7 +5,7 @@ const {
   productsMock,
   createProduct,
   getProducts,
-} = require('../utils/mocks/products');
+} = require('../src/scraper/infrastructure/repositories/mocks/products');
 
 const testServer = require('../utils/testServer');
 
