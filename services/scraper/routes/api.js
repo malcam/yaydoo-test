@@ -12,7 +12,7 @@ router.post('/init', async (req, res, next) => {
   try {
     const scraperService = new AmazonBestsellersScraper('http://www.amazon.com.mx/gp/bestsellers/?ref_=nav_cs_bestsellers');
 
-    const repository = new ProductRepository(await client.createDb());
+    const repository = new ProductRepository((await client.createDb()).getClient());
     const service = new CreateProducts(repository, scraperService);
     await service.process();
 
@@ -26,7 +26,7 @@ router.post('/init', async (req, res, next) => {
 
 router.get('/products', async (req, res, next) => {
   try {
-    const repository = new ProductRepository(await client.createDb());
+    const repository = new ProductRepository((await client.createDb()).getClient());
     const service = new FetchProducts(repository);
     const products = await service.process();
 

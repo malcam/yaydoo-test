@@ -23,7 +23,7 @@ async function createDb() {
       client.run(queries.tableProducts, (err) => {
         if (err) return reject(err);
         resolve({
-          client,
+          getClient: () => client,
           setProducts,
           getProducts,
         });
@@ -32,6 +32,10 @@ async function createDb() {
   });
 }
 
+/**
+ * Persist a product.
+ * @deprecated
+ */
 async function setProducts(id, category, title, rank, NumberOfReviews, img) {
   return new Promise((resolve, reject) => {
     const stmt = client.prepare('INSERT INTO products VALUES ( ?, ?, ?, ?, ?, ?);');
@@ -44,6 +48,10 @@ async function setProducts(id, category, title, rank, NumberOfReviews, img) {
   });
 }
 
+/**
+ * Get product list.
+ * @deprecated
+ */
 async function getProducts() {
   return new Promise((resolve, reject) => {
     const products = [];

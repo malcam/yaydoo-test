@@ -1,21 +1,22 @@
 class ProductRepository {
   constructor(client) {
-    this.connection = client;
+    this.client = client;
   }
 
   /**
-   * Valida que el objeto recibido sea una instancia de Interconsulta.
-   * @param {Prooduct} product
+   * Validate that the received object is from the expected instance.
+   * @param {Product} product
    */
   assertThatIsProduct(product) {
     /* if (!(interconsulta instanceof Interconsulta)) {
 
     } */
-    throw new TypeError('No se recibio el modelo esperado');
+    throw new TypeError('No valid instance');
   }
 
   all() {
     try {
+      // TODO: Adapt results to domain models
       return this.find();
     } catch (error) {
       console.error('error get products ', error);
@@ -42,16 +43,21 @@ class ProductRepository {
   }
 
   persist(data) {
-    return this.connection.setProducts(data.id,
-      data.category,
-      data.title,
-      data.textRanking,
-      data.NumberOfReviews,
-      data.img);
+    return new Promise((resolve, reject) => {
+      const stmt = this.client.prepare('INSERT INTO products VALUES ( ?, ?, ?, ?, ?, ?);');
+      stmt.run(data.id, data.category, data.title, data.textRanking, data.NumberOfReviews, data.img);
+      stmt.finalize((err) => (err ? reject(err) : resolve()));
+    });
   }
 
   find() {
-    return this.connection.getProducts();
+    return new Promise((resolve, reject) => {
+      const products = [];
+      this.client.each('SELECT * FROM products;', (err, row) => {
+        if (err) return reject(err);
+        products.push(row);
+      }, (err, count) => (err ? reject(err) : resolve({ count, products })));
+    });
   }
 }
 
