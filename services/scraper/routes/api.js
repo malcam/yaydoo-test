@@ -1,39 +1,37 @@
 const express = require('express');
 const { scraper } = require('../../../src/scraper/infrastructure/service/AmazonBestsellersScraper');
+const ProductRepository = require('../../../src/scraper/infrastructure/repositories/sqlite/ProductRepository');
+
 const {
-  createProduct,
-  getProducts,
-} = require('../../../src/scraper/infrastructure/repositories/sqlite/products');
+  client,
+} = require('../../../src/scraper/infrastructure/lib/db');
 
-function Api(app) {
-  const router = express.Router();
-  app.use('/api', router);
+const router = express.Router();
 
-  router.post('/init', async (req, res, next) => {
-    // throw new Error("ERROR GET DATABASE--")
-    try {
-      const data = await scraper('http://www.amazon.com.mx/gp/bestsellers/?ref_=nav_cs_bestsellers');
-      await createProduct(data);
-      res.status(200).json({
-        message: 'Se guardo correctamente',
-      });
-    } catch (err) {
-      next(err);
-    }
-  });
+router.post('/init', async (req, res, next) => {
+  // throw new Error("ERROR GET DATABASE--")
+  try {
+    const data = await scraper('http://www.amazon.com.mx/gp/bestsellers/?ref_=nav_cs_bestsellers');
+    await createProduct(data);
+    res.status(200).json({
+      message: 'Se guardo correctamente',
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 
-  router.post('/products', async (req, res, next) => {
-    try {
-      const product = await getProducts();
+router.get('/products', async (req, res, next) => {
+  try {
+    const product = await getProducts();
 
-      res.status(200).json({
-        data: product,
-        message: 'products',
-      });
-    } catch (err) {
-      next(err);
-    }
-  });
-}
+    res.status(200).json({
+      data: product,
+      message: 'products',
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 
-module.exports = Api;
+module.exports = router;

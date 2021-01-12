@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const boom = require('boom');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const scraperRoutes = require('./services/scraper');
 const DataBaseConnect = require('./utils/middlewares/dataBaseConnect');
-const Api = require('./services/scraper/routes/api');
+// const Api = require('./services/scraper/routes/api');
 const { config } = require('./config/index');
 
 const {
@@ -26,9 +27,10 @@ app.use(cookieParser());
 
 // middlewares
 app.use(bodyParser.json());
-// routes
 
-Api(app);
+// routes
+// TODO: Add routes as middleware
+scraperRoutes.routes(app);
 
 app.use((req, res, next) => {
   if (isRequestAjaxOrApi(req)) {
