@@ -5,7 +5,7 @@ const {
   productsMock,
   createProduct,
   getProducts,
-} = require('../src/scraper/infrastructure/repositories/mocks/products');
+} = require('../src/scraper/infrastructure/repositories/mocks/ProductRepository');
 
 const testServer = require('../utils/testServer');
 
@@ -18,9 +18,9 @@ describe('routes - api - products', () => {
   });
   const request = testServer(route);
 
-  describe('POST /products', () => {
+  describe('GET /products', () => {
     it('should respond with status 200', (done) => {
-      request.post('/api/products').expect(200, done);
+      request.get('/api/products').expect(200, done);
     });
   });
 });

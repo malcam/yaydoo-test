@@ -1,16 +1,24 @@
-const { createDb } = require('../../lib/db');
-
 class ProductRepository {
   constructor(client) {
     this.connection = client;
   }
 
+  /**
+   * Valida que el objeto recibido sea una instancia de Interconsulta.
+   * @param {Prooduct} product
+   */
+  assertThatIsProduct(product) {
+    /* if (!(interconsulta instanceof Interconsulta)) {
+
+    } */
+    throw new TypeError('No se recibio el modelo esperado');
+  }
+
   all() {
     try {
-      // const services = await createDb();
-      return this.connection.getProducts();
+      return this.find();
     } catch (error) {
-      console.error('error getProducts ', error);
+      console.error('error get products ', error);
       return Promise.reject(error);
     }
   }
@@ -24,44 +32,24 @@ class ProductRepository {
 
     try {
       const id = JSON.parse(product.id) ? JSON.parse(product.id).asin : Math.random();
-      return this.connection.setProducts(id,
+      return this.persist(id,
         product.category,
         product.title,
         product.textRanking,
         product.NumberOfReviews,
         product.img);
     } catch (error) {
-      console.error('error createProduct ', error);
+      console.error('error create product ', error);
       return Promise.reject(error);
     }
   }
 
-  async createProduct(product) {
-    try {
-      // const services = await createDb();
-      product.map(async (item) => {
-        const id = JSON.parse(item.id) ? JSON.parse(item.id).asin : Math.random();
-        await this.connection.setProducts(id,
-          item.category,
-          item.title,
-          item.textRanking,
-          item.NumberOfReviews,
-          item.img);
-      });
-    } catch (error) {
-      console.error('error createProduct ', error);
-      return error;
-    }
+  persist(data) {
+    return this.connection.setProducts(data);
   }
 
-  async getProducts() {
-    try {
-      // const services = await createDb();
-      return await this.connection.getProducts();
-    } catch (error) {
-      console.error('error getProducts ', error);
-      return error;
-    }
+  find() {
+    return this.connection.getProducts();
   }
 }
 

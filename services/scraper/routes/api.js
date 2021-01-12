@@ -1,6 +1,7 @@
 const express = require('express');
 const { scraper } = require('../../../src/scraper/infrastructure/service/AmazonBestsellersScraper');
 const ProductRepository = require('../../../src/scraper/infrastructure/repositories/sqlite/ProductRepository');
+const { FetchProducts } = require('../../../src/scraper/application/index');
 
 const client = require('../../../src/scraper/infrastructure/lib/db');
 
@@ -27,7 +28,8 @@ router.post('/init', async (req, res, next) => {
 router.get('/products', async (req, res, next) => {
   try {
     const repository = new ProductRepository(await client.createDb());
-    const products = await repository.all();
+    const service = new FetchProducts(repository);
+    const products = await service.process();
 
     res.status(200).json({
       data: products,
