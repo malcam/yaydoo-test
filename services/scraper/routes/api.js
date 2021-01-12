@@ -2,9 +2,7 @@ const express = require('express');
 const { scraper } = require('../../../src/scraper/infrastructure/service/AmazonBestsellersScraper');
 const ProductRepository = require('../../../src/scraper/infrastructure/repositories/sqlite/ProductRepository');
 
-const {
-  client,
-} = require('../../../src/scraper/infrastructure/lib/db');
+const client = require('../../../src/scraper/infrastructure/lib/db');
 
 const router = express.Router();
 
@@ -12,7 +10,12 @@ router.post('/init', async (req, res, next) => {
   // throw new Error("ERROR GET DATABASE--")
   try {
     const data = await scraper('http://www.amazon.com.mx/gp/bestsellers/?ref_=nav_cs_bestsellers');
-    await createProduct(data);
+
+    const repository = new ProductRepository(await client.createDb());
+    data.map(async (item) => {
+      await repository.create(item);
+    });
+    // await createProduct(data);
     res.status(200).json({
       message: 'Se guardo correctamente',
     });
@@ -23,10 +26,11 @@ router.post('/init', async (req, res, next) => {
 
 router.get('/products', async (req, res, next) => {
   try {
-    const product = await getProducts();
+    const repository = new ProductRepository(await client.createDb());
+    const products = await repository.all();
 
     res.status(200).json({
-      data: product,
+      data: products,
       message: 'products',
     });
   } catch (err) {

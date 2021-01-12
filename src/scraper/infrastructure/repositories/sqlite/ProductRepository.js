@@ -1,8 +1,8 @@
 const { createDb } = require('../../lib/db');
 
 class ProductRepository {
-  constructor(connection) {
-    this.connection = connection;
+  constructor(client) {
+    this.connection = client;
   }
 
   all() {
