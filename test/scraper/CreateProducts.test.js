@@ -3,11 +3,12 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 const {
-  FetchProducts,
+  CreateProducts,
 } = require('../../src/scraper/application/index');
 
 const Product = require('../../src/scraper/domain/model/Product');
 const ProductRepository = require('../../src/scraper/infrastructure/repositories/mocks/ProductRepository');
+const AmazonBestsellersScraper = require('../../src/scraper/infrastructure/service/AmazonBestsellersScraper');
 
 function makeProductList() {
   const product = new Product();
@@ -23,20 +24,22 @@ function makeProductList() {
 }
 
 function main(response) {
+  const scraperService = new AmazonBestsellersScraper('http://www.amazon.com.mx/gp/bestsellers/?ref_=nav_cs_bestsellers');
+
   const repository = new ProductRepository(null, response);
-  const service = new FetchProducts(repository);
+  const service = new CreateProducts(repository, scraperService);
 
   return service.process();
 }
 
-test('Try fetch all products', () => {
+test('Create products list', () => {
   expect(main({
-    find: () => Promise.resolve(makeProductList()),
-  })).resolves.toMatchObject(makeProductList());
+    persist: () => Promise.resolve(true),
+  })).resolves.toMatchObject(true);
 });
 
-test('Fail to try fetch all products', () => {
+test('Fail Create product list', () => {
   expect(main({
-    find: () => { throw new Error('Item not found'); },
-  })).rejects.toThrow('Item not found');
+    persist: (data) => { throw new Error('The information could not be saved'); },
+  })).rejects.toThrow('The information could not be saved');
 });

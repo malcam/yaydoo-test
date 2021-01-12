@@ -31,21 +31,23 @@ class ProductRepository {
     // assertThatIsProduct(product);
 
     try {
-      const id = JSON.parse(product.id) ? JSON.parse(product.id).asin : Math.random();
-      return this.persist(id,
-        product.category,
-        product.title,
-        product.textRanking,
-        product.NumberOfReviews,
-        product.img);
+      const productDTO = { ...product };
+      // TODO: Move to Adapter
+      productDTO.id = JSON.parse(product.id) ? JSON.parse(product.id).asin : Math.random();
+      return this.persist(productDTO);
     } catch (error) {
       console.error('error create product ', error);
-      return Promise.reject(error);
+      throw error;
     }
   }
 
   persist(data) {
-    return this.connection.setProducts(data);
+    return this.connection.setProducts(data.id,
+      data.category,
+      data.title,
+      data.textRanking,
+      data.NumberOfReviews,
+      data.img);
   }
 
   find() {

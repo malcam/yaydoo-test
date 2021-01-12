@@ -7,11 +7,11 @@ class ProductRepository extends RealRepository {
   }
 
   persist(data) {
-    return Promise.resolve(this.response.persist);
+    return this.response.persist(data);
   }
 
   find() {
-    return Promise.resolve(this.response.find);
+    return this.response.find();
   }
 }
 
