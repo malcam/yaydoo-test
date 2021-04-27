@@ -1,3 +1,6 @@
+/**
+ * Clase en la que adapta las consultas para manejar en SQLite3
+ */
 class Adapter {
   constructor() {
   }

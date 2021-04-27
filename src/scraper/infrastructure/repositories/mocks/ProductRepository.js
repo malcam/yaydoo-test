@@ -1,5 +1,9 @@
 const RealRepository = require('../sqlite/ProductRepository');
 
+/**
+ * Clase en la que hereda de RealRepository (polimorfismo)
+ * @constructor
+ */
 class ProductRepository extends RealRepository {
   constructor(client, response) {
     super(client);

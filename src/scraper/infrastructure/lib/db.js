@@ -17,6 +17,7 @@ const queries = {
     `,
 };
 
+/** Para la creación de la base de datos en caso de que no exista */
 async function createDb() {
   return new Promise((resolve, reject) => {
     client.serialize(() => {
@@ -49,7 +50,8 @@ async function setProducts(id, category, title, rank, NumberOfReviews, img) {
 }
 
 /**
- * Get product list.
+ * Obtiene la lista de productos por medio de una promesa en la que hace una
+ * consulta directamente a la base de datos.
  * @deprecated
  */
 async function getProducts() {

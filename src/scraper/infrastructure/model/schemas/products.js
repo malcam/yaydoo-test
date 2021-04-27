@@ -3,6 +3,9 @@ const Joi = require('joi');
 const productIdSchema = Joi.string().regex(/^[0-9a-fA-F]{24}$/);
 const productTagSchema = Joi.array().items(Joi.string().max(10));
 
+/**
+ * Se crean los esquemas en caso de que no existan
+ */
 const createProductSchema = {
   name: Joi.string()
     .max(50)
@@ -14,6 +17,9 @@ const createProductSchema = {
   tags: productTagSchema,
 };
 
+/**
+ * Se hacen las modificaciones de los esquemas en caso de que estos ya existan
+ */
 const updateProductSchema = {
   name: Joi.string().max(50),
   price: Joi.number()

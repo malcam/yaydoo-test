@@ -1,3 +1,8 @@
+/**
+ * Modelo para recibir y enviar información a la base de datos
+ * @Constructor
+ */
+
 class Product {
   constructor(data = {}) {
     this.id = data.id;
