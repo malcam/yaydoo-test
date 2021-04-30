@@ -1,3 +1,4 @@
+//Dependencies
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -9,14 +10,15 @@ const DataBaseConnect = require('./utils/middlewares/dataBaseConnect');
 // const Api = require('./services/scraper/routes/api');
 const { config } = require('./config/index');
 
+//Assets
 const {
   logErrors,
   wrapErrors,
   clientErrorHandler,
   errorHandler,
 } = require('./utils/middlewares/errorsHandlers');
-
 const isRequestAjaxOrApi = require('./utils/isRequestAjaxOrApi');
+
 // app
 const app = express();
 // app.use('*', DataBaseConnect);

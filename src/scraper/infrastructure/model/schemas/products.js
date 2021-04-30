@@ -3,9 +3,7 @@ const Joi = require('joi');
 const productIdSchema = Joi.string().regex(/^[0-9a-fA-F]{24}$/);
 const productTagSchema = Joi.array().items(Joi.string().max(10));
 
-/**
- * Se crean los esquemas en caso de que no existan
- */
+/** Se crean los esquemas en caso de que no existan */
 const createProductSchema = {
   name: Joi.string()
     .max(50)
@@ -29,6 +27,7 @@ const updateProductSchema = {
   tags: productTagSchema,
 };
 
+/** Al final se exportan las constantes como modulos */
 module.exports = {
   productIdSchema,
   productTagSchema,

@@ -10,10 +10,19 @@ class ProductRepository extends RealRepository {
     this.response = response;
   }
 
+  /**
+   * Función sobrecargada
+   * @param {object} data
+   * @returns object Objeto de respuesta al objeto data
+   */
   persist(data) {
     return this.response.persist(data);
   }
 
+  /**
+   * Busqueda de información
+   * @returns object Devuelve un objeto con el resultado de la b
+   */
   find() {
     return this.response.find();
   }

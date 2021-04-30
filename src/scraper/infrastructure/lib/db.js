@@ -34,8 +34,14 @@ async function createDb() {
 }
 
 /**
- * Persist a product.
+ * Guarda el producto
  * @deprecated
+ * @param {number} id
+ * @param {string} category
+ * @param {string} title
+ * @param {string} rank
+ * @param {number} NumberOfReviews
+ * @param {string} img
  */
 async function setProducts(id, category, title, rank, NumberOfReviews, img) {
   return new Promise((resolve, reject) => {
@@ -67,6 +73,9 @@ async function getProducts() {
   });
 }
 
+/**
+ * Al final se exporta la función para crear la base de datos
+ */
 module.exports = {
   createDb,
 };

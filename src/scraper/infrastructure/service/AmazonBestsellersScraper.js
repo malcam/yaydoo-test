@@ -6,8 +6,8 @@ class AmazonBestsellersScraper {
   }
 
   /**
-   * Evaluates a function in the puppeteer page's context and returns the result
-   * @returns { Promise }
+   * Evalua la función en el contexto del sitio de puppeteer.
+   * @returns { Promise } Resultado de la consulta en la base de datos.
    */
   evaluate() {
     const $reviews = document.querySelectorAll('.zg_homeWidget');
@@ -28,6 +28,9 @@ class AmazonBestsellersScraper {
     return data;
   }
 
+  /** Procesa la información conforme se reciba.
+   * @returns object Datos procesados.
+   */
   async process() {
     try {
       const browser = await puppeteer.launch();
