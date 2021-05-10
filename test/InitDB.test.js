@@ -13,16 +13,12 @@ chai.use(chaiHttp);
 describe('Productos', () => {
   // describe();
   // eslint-disable-next-line no-undef
-  describe('Creación + Uso de Base de Datos', (done) => {
-    // eslint-disable-next-line no-undef
-    it('Debe crear la base de datos', () => {
-      chai.request(server)
-        .post('/api/init')
-        .end((req, res) => {
-          res.should.have.status(201);
-          done();
-        });
-    });
+  describe('Bajo promesa', () => {
+    it('Debe crear la base de datos', async () => {
+      const res = await chai.request(server)
+        .post('/api/init');
+      res.should.have.status(201);
+    }).timeout(5000);
   });
   // eslint-disable-next-line no-undef
   describe('Obtención de productos', () => {
@@ -34,7 +30,7 @@ describe('Productos', () => {
           res.should.have.status(200);
           done();
         });
-    });
+    }).timeout(5000);
     // eslint-disable-next-line no-undef
     it('Debe fallar si los arreglos están vacios', (done) => {
       chai.request(server)
