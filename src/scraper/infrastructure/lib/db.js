@@ -17,6 +17,7 @@ const queries = {
     `,
 };
 
+/** Para la creación de la base de datos en caso de que no exista */
 async function createDb() {
   return new Promise((resolve, reject) => {
     client.serialize(() => {
@@ -33,8 +34,14 @@ async function createDb() {
 }
 
 /**
- * Persist a product.
+ * Guarda el producto
  * @deprecated
+ * @param {number} id
+ * @param {string} category
+ * @param {string} title
+ * @param {string} rank
+ * @param {number} NumberOfReviews
+ * @param {string} img
  */
 async function setProducts(id, category, title, rank, NumberOfReviews, img) {
   return new Promise((resolve, reject) => {
@@ -49,7 +56,8 @@ async function setProducts(id, category, title, rank, NumberOfReviews, img) {
 }
 
 /**
- * Get product list.
+ * Obtiene la lista de productos por medio de una promesa en la que hace una
+ * consulta directamente a la base de datos.
  * @deprecated
  */
 async function getProducts() {
@@ -65,6 +73,9 @@ async function getProducts() {
   });
 }
 
+/**
+ * Al final se exporta la función para crear la base de datos
+ */
 module.exports = {
   createDb,
 };

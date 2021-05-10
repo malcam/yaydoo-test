@@ -10,8 +10,8 @@ class CreateProducts {
   }
 
   /**
-   * Get all products
-   * @returns { Promise }
+   * Obtiene todos los productos
+   * @returns { Promise } una promesa en la que devuelve los items creados
    */
   async process() {
     // TODO: Move to constructor argument
@@ -24,4 +24,7 @@ class CreateProducts {
   }
 }
 
+/**
+ * Al final devuelve la clase
+ */
 module.exports = CreateProducts;
