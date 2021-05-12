@@ -7,7 +7,8 @@
     "start": "node index",
     "dev": "nodemon index",
     "test": "mocha --exit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "newman-local": "./scripts/correrNewman.sh"
   },
   "keywords": [],
   "author": "",
