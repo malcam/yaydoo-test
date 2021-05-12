@@ -3,9 +3,7 @@ const { config } = require('../../config');
 const isRequestAjaxOrApi = require('../isRequestAjaxOrApi');
 
 function withErrorStack(err, stack) {
-  if (config.dev) {
-    return { ...err, stack }; // Object.assign({}, err, stack)
-  }
+  return (config.dev ? { ...err, stack } : null);
 }
 
 function logErrors(err, req, res, next) {
@@ -14,11 +12,8 @@ function logErrors(err, req, res, next) {
 }
 
 function wrapErrors(err, req, res, next) {
-  if (!err.isBoom) {
-    next(boom.badImplementation(err));
-  }
-
-  next(err);
+  next((!err.isBoom)
+    ? boom.badImplementation(err) : err);
 }
 
 function clientErrorHandler(err, req, res, next) {
@@ -34,13 +29,11 @@ function clientErrorHandler(err, req, res, next) {
   }
 }
 
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res) {
   const {
-    output: { statusCode, payload },
+    output: { statusCode },
   } = err;
 
-  // res.status(statusCode);
-  // res.render('error', withErrorStack(payload, err.stack));
   res.status(statusCode || 500);
   res.json({
     message: err.message,

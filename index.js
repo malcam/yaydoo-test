@@ -1,25 +1,22 @@
+// Dependencies
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
 const boom = require('boom');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const scraperRoutes = require('./services/scraper');
-const DataBaseConnect = require('./utils/middlewares/dataBaseConnect');
-// const Api = require('./services/scraper/routes/api');
 const { config } = require('./config/index');
 
+// Assets
 const {
   logErrors,
   wrapErrors,
   clientErrorHandler,
   errorHandler,
 } = require('./utils/middlewares/errorsHandlers');
-
 const isRequestAjaxOrApi = require('./utils/isRequestAjaxOrApi');
-// app
+
 const app = express();
-// app.use('*', DataBaseConnect);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,7 +29,7 @@ app.use(bodyParser.json());
 // TODO: Add routes as middleware
 scraperRoutes.routes(app);
 
-app.use((req, res, next) => {
+app.use((req, res) => {
   if (isRequestAjaxOrApi(req)) {
     const {
       output: { statusCode, payload },
@@ -54,3 +51,9 @@ app.use(errorHandler);
 const server = app.listen(config.port, () => {
   console.log(`Listening http://localhost:${server.address().port}`);
 });
+
+/**
+ * Se exporta el modulo para su posterior uso en las pruebas (Mocha/Chai)
+ * @type {http.Server}
+ */
+module.exports = server;

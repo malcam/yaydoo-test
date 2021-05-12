@@ -4,8 +4,8 @@ class ProductRepository {
   }
 
   /**
-   * Validate that the received object is from the expected instance.
-   * @param {Product} product
+   * Valida que el objeto recibido corresponda a su instancia esperada.
+   * @param {object} product
    */
   assertThatIsProduct(product) {
     /* if (!(interconsulta instanceof Interconsulta)) {
@@ -13,7 +13,12 @@ class ProductRepository {
     } */
     throw new TypeError('No valid instance');
   }
-
+  /**
+   * Busqueda de todos los productos
+   * @returns object resultados de la busqueda de todos los productos
+   * @returns Promise una promesa con los resultados de la busqueda en caso de
+   * error
+   */
   all() {
     try {
       // TODO: Adapt results to domain models
